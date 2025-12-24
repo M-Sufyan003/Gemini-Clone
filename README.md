@@ -9,6 +9,12 @@ It’s designed to look professional, impress recruiters, and suit a **Gemini AI
 A sleek and responsive **Gemini AI-inspired web application** built using **HTML, CSS, and Vanilla JavaScript**.  
 This project mimics the UI and basic conversational behavior of Google’s Gemini, focusing on clean design, smooth interactions, and frontend logic.
 
+
+# Since this is a frontend clone:
+
+“API keys are intentionally excluded for security reasons.
+Users must add their own keys to run the project.”
+
 ---
 
 ## 🌟 Live Demo
