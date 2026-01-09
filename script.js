@@ -122,8 +122,59 @@ const copyMessage= (copyButton) =>
 
     navigator.clipboard.writeText(messageText);
     copyButton.innerText= "done";
-    setTimeout(() =>
-    {
-        copyButton.innerText = ""
-    })
+    setTimeout(() => copyButton.innerText = "content_copy", 1000);
 }
+
+const handleOutgoingchat= () =>
+{
+    userMessage = typingForm.querySelector(".typing-input").value.trim() || userMessage;
+    if(!userMessage || isResponseGenerating) return;
+
+    isResponseGenerating = true;
+
+    const html = `<div class = "message-content">
+        <img class="avtar" src="images/user.jpg" alt="User Avatar" />
+        <p class="text"></p>
+    </div>`;
+
+    const outgoingMessageDiv = createMessageElement(html,"outgoing");
+    outgoingMessageDiv.querySelector(".text").innerText = userMessage;
+    chatContainer.appendChild(outgoingMessageDiv);
+
+    typingForm.reset();
+    document.body.classList.add("hide-header");
+    chatContainer.scrollTo(0, chatContainer.scrollHeight);
+    setTimeout(showLoadingAnimation, 500);
+
+}
+
+toggleThemeButton.addEventListener("click", () => {
+    const isLightMode = document.body.classList.toggle("light_mode");
+    localStorage.setItem("themeColor", isLightMode ? "light_mode" : "dark_mode");
+    toggleThemeButton.innerText = isLightMode ? "dark_mode" : "light_mode";
+});
+
+deleteChatButton.addEventListener("click", ()=> {
+    if (confirm("Are you sure you want to delete all the chats?"))
+    {
+        localStorage.removeItem("saved-chats");
+        loadDataFromLocalStorage();
+    }
+});
+
+suggestions.forEach(suggestion => 
+{
+    suggestion.addEventListener("click", () => 
+    {
+        userMessage = suggestion.querySelector(".text").innerText;
+        handleOutgoingchat();
+    });
+});
+
+typingForm.addEventListener("submit", (e) =>
+{
+    e.preventDefault();
+    handleOutgoingchat();
+});
+
+loadDataFromLocalStorage();
